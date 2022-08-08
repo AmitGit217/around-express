@@ -6,7 +6,7 @@ const usersPath = path.join(__dirname, '..', 'data', 'usersData.json');
 const getUsers = (req, res) => {
   getDataFromFile(usersPath)
     .then((users) => res.send(users))
-    .catch((err) => err);
+    .catch((err) => res.status(500).send(err));
 };
 
 const getUserId = (req, res) => {
@@ -18,7 +18,8 @@ const getUserId = (req, res) => {
         return;
       }
       res.status(404).send({ message: 'User ID not found' });
-    });
+    })
+    .catch((err) => res.status(500).send(err));
 };
 
 module.exports = { getUsers, getUserId };
