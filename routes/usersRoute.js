@@ -19,7 +19,10 @@ router.get('/users/:_id', (req, res) => {
   const usersDataFile = path.join(__dirname, '..', 'data', 'usersData.json');
   fs.readFile(usersDataFile, { encoding: 'utf8' }, (err, data) => {
     const userId = JSON.parse(data).find((user) => user._id === _id);
-    res.send(userId);
+    if (userId) {
+      res.send(userId);
+    }
+    res.send({ message: 'User ID not found' });
   });
 });
 
