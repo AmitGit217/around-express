@@ -9,7 +9,7 @@ router.get('/cards', (req, res) => {
       res.send(err);
       return;
     }
-    res.send(data);
+    res.send(JSON.parse(data));
   });
 });
 
