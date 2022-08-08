@@ -7,7 +7,7 @@
 `/routes` — Routing files.
 
 `/helpers` - Generic functions such for example:
-`const getDataFromFile = (file) => fsPromises .readFile(file, { encoding: 'utf8' }) .then((data) => JSON.parse(data)) .catch((err) => err);`
+<const getDataFromFile = (file) => fsPromises.readFile(file, { encoding: 'utf8' }).then((data) => JSON.parse(data)).catch((err) => err)>
 
 ## Running the Project
 
