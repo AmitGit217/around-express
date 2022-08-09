@@ -9,7 +9,7 @@ const getUsers = (req, res) => {
     .catch((err) => res.status(500).send(err));
 };
 
-const getUserId = (req, res) => {
+const getUserById = (req, res) => {
   getDataFromFile(usersPath)
     .then((users) => users.find((user) => user._id === req.params._id))
     .then((user) => {
@@ -22,4 +22,4 @@ const getUserId = (req, res) => {
     .catch((err) => res.status(500).send(err));
 };
 
-module.exports = { getUsers, getUserId };
+module.exports = { getUsers, getUserById };
