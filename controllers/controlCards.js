@@ -1,11 +1,16 @@
-const path = require('path');
-const getDataFromFile = require('../helpers/files');
-
-const cardsPath = path.join(__dirname, '..', 'data', 'cardsData.json');
+/* eslint-disable object-curly-newline */
+const Card = require('../models/cardModel');
 
 const getCards = (req, res) =>
-  getDataFromFile(cardsPath)
+  Card.find({})
     .then((cards) => res.send(cards))
     .catch((err) => res.status(500).send(err));
 
-module.exports = getCards;
+const postCard = (req, res) => {
+  const { name, link, likes, createdAt } = req.body;
+  Card.create({ name, link, owner: req.user._id, likes, createdAt })
+    .then((card) => res.send(card))
+    .catch((err) => res.send(err));
+};
+
+module.exports = { getCards, postCard };
