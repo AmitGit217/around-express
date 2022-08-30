@@ -15,4 +15,10 @@ const getUserById = (req, res) => {
   });
 };
 
-module.exports = { getUsers, getUserById };
+const postUser = (req, res) => {
+  User.create(req.body)
+    .then((user) => res.send(user))
+    .catch((err) => res.status(400).send(err));
+};
+
+module.exports = { getUsers, getUserById, postUser };
