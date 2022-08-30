@@ -13,4 +13,11 @@ const postCard = (req, res) => {
     .catch((err) => res.send(err));
 };
 
-module.exports = { getCards, postCard };
+const deleteCardById = (req, res) => {
+  const { _id } = req.body;
+  Card.deleteOne(_id)
+    .then((card) => res.send(card))
+    .catch((err) => res.status(500).send(err));
+};
+
+module.exports = { getCards, postCard, deleteCardById };
