@@ -1,25 +1,18 @@
-const path = require('path');
-const getDataFromFile = require('../helpers/files');
-
-const usersPath = path.join(__dirname, '..', 'data', 'usersData.json');
+const User = require('../models/userModel');
 
 const getUsers = (req, res) => {
-  getDataFromFile(usersPath)
-    .then((users) => res.send(users))
-    .catch((err) => res.status(500).send(err));
+  User.find({}).then((users) => res.send(users));
 };
 
 const getUserById = (req, res) => {
-  getDataFromFile(usersPath)
-    .then((users) => users.find((user) => user._id === req.params._id))
-    .then((user) => {
-      if (user) {
-        res.send(user);
-        return;
-      }
-      res.status(404).send({ message: 'User ID not found' });
-    })
-    .catch((err) => res.status(500).send(err));
+  const { _id } = req.params;
+  User.findById(_id).then((user) => {
+    if (user) {
+      res.send(user);
+    } else {
+      res.status(404).send('No such data');
+    }
+  });
 };
 
 module.exports = { getUsers, getUserById };
