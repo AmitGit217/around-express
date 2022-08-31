@@ -1,20 +1,21 @@
 /* eslint-disable comma-dangle */
 /* eslint-disable object-curly-newline */
 const Card = require('../models/cardModel');
+const { NOT_FOUND, INVALID_DATA, DEFAULT_ERROR } = require('../lib/consts');
 
 const getCards = (req, res) =>
   Card.find({})
     .then((cards) => res.send(cards))
-    .catch((err) => res.status(500).send(err));
+    .catch((err) => res.status(DEFAULT_ERROR).send(err));
 
 const postCard = (req, res) => {
   Card.create({ ...req.body, owner: req.user._id })
     .then((card) => res.send(card))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(400).send({ Error: err.message });
+        res.status(INVALID_DATA).send({ Error: err.message });
       } else {
-        res.status(500).send({ Error: err.message });
+        res.status(DEFAULT_ERROR).send({ Error: err.message });
       }
     });
 };
@@ -26,9 +27,9 @@ const deleteCardById = (req, res) => {
     .then((card) => res.send(card))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        res.status(404).send({ Error: err.message });
+        res.status(NOT_FOUND).send({ Error: err.message });
       } else {
-        res.status(500).send({ Error: err.message });
+        res.status(DEFAULT_ERROR).send({ Error: err.message });
       }
     });
 };
@@ -44,9 +45,9 @@ const likeCard = (req, res) => {
     .then((card) => res.status(200).send(card))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        res.status(404).send({ Error: err.message });
+        res.status(NOT_FOUND).send({ Error: err.message });
       } else {
-        res.status(500).send({ Error: err.message });
+        res.status(DEFAULT_ERROR).send({ Error: err.message });
       }
     });
 };
@@ -59,9 +60,9 @@ const disLikeCard = (req, res) => {
     .then((card) => res.status(200).send(card))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        res.status(404).send({ Error: err.message });
+        res.status(NOT_FOUND).send({ Error: err.message });
       } else {
-        res.status(500).send({ Error: err.message });
+        res.status(DEFAULT_ERROR).send({ Error: err.message });
       }
     });
 };

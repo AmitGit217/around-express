@@ -1,10 +1,16 @@
 /* eslint-disable comma-dangle */
 const User = require('../models/userModel');
+const {
+  NOT_FOUND,
+  INVALID_DATA,
+  DEFAULT_ERROR,
+  CREATE,
+} = require('../lib/consts');
 
 const getUsers = (req, res) => {
   User.find({})
     .then((users) => res.send(users))
-    .catch((err) => res.status(500).send(err));
+    .catch((err) => res.status(DEFAULT_ERROR).send(err));
 };
 
 const getUserById = (req, res) => {
@@ -14,21 +20,21 @@ const getUserById = (req, res) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        res.status(404).send({ Error: err.message });
+        res.status(NOT_FOUND).send({ Error: err.message });
       } else {
-        res.status(500).send({ Error: err.message });
+        res.status(DEFAULT_ERROR).send({ Error: err.message });
       }
     });
 };
 
 const postUser = (req, res) => {
   User.create(req.body)
-    .then((user) => res.status(201).send(user))
+    .then((user) => res.status(CREATE).send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(400).send({ Error: err.message });
+        res.status(INVALID_DATA).send({ Error: err.message });
       } else {
-        res.status(500).send({ Error: err.message });
+        res.status(DEFAULT_ERROR).send({ Error: err.message });
       }
     });
 };
@@ -41,12 +47,12 @@ const updateUser = (req, res) => {
     { runValidators: true }
   )
     .orFail()
-    .then(() => res.status(200).send(req.body))
+    .then(() => res.send(req.body))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(400).send({ Error: err.message });
+        res.status(INVALID_DATA).send({ Error: err.message });
       } else {
-        res.status(500).send({ Error: err.message });
+        res.status(DEFAULT_ERROR).send({ Error: err.message });
       }
     });
 };
@@ -58,12 +64,12 @@ const updateAvatar = (req, res) => {
     { avatar: req.body.avatar },
     { runValidators: true }
   )
-    .then((user) => res.status(200).send(user))
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(400).send({ Error: err.message });
+        res.status(INVALID_DATA).send({ Error: err.message });
       } else {
-        res.status(500).send({ Error: err.message });
+        res.status(DEFAULT_ERROR).send({ Error: err.message });
       }
     });
 };
