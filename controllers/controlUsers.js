@@ -34,7 +34,21 @@ const postUser = (req, res) => {
 
 const updateUser = (req, res) => {
   const { _id } = req.user;
-  User.findByIdAndUpdate(_id, req.body)
+  User.findByIdAndUpdate(_id, { name: req.body.name, about: req.body.about })
+    .orFail()
+    .then(() => res.status(200).send(req.body))
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        res.status(400).send({ Error: err.message });
+      } else {
+        res.status(500).send({ Error: err.message });
+      }
+    });
+};
+
+const updateAvatar = (req, res) => {
+  const { _id } = req.user;
+  User.findByIdAndUpdate(_id, { avatar: req.body.avatar })
     .orFail()
     .then(() => res.status(200).send(req.body))
     .catch((err) => {
@@ -51,4 +65,5 @@ module.exports = {
   getUserById,
   postUser,
   updateUser,
+  updateAvatar,
 };
