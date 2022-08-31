@@ -42,15 +42,28 @@ const likeCard = (req, res) => {
     { new: true }
   )
     .then((card) => res.status(200).send(card))
-    .catch((err) => res.send(err));
+    .catch((err) => {
+      if (err.name === 'DocumentNotFoundError') {
+        res.status(404).send({ Error: err.message });
+      } else {
+        res.status(500).send({ Error: err.message });
+      }
+    });
 };
 
 const disLikeCard = (req, res) => {
   const cardId = req.params._id;
   const userId = req.user._id;
   Card.findByIdAndUpdate(cardId, { $pull: { likes: userId } }, { new: true })
+    .orFail()
     .then((card) => res.status(200).send(card))
-    .catch((err) => res.send(err));
+    .catch((err) => {
+      if (err.name === 'DocumentNotFoundError') {
+        res.status(404).send({ Error: err.message });
+      } else {
+        res.status(500).send({ Error: err.message });
+      }
+    });
 };
 
 module.exports = { getCards, postCard, deleteCardById, likeCard, disLikeCard };
