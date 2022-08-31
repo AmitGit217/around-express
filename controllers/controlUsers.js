@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 const User = require('../models/userModel');
 
 const getUsers = (req, res) => {
@@ -34,7 +35,11 @@ const postUser = (req, res) => {
 
 const updateUser = (req, res) => {
   const { _id } = req.user;
-  User.findByIdAndUpdate(_id, { name: req.body.name, about: req.body.about })
+  User.findByIdAndUpdate(
+    _id,
+    { name: req.body.name, about: req.body.about },
+    { runValidators: true }
+  )
     .orFail()
     .then(() => res.status(200).send(req.body))
     .catch((err) => {
@@ -48,9 +53,12 @@ const updateUser = (req, res) => {
 
 const updateAvatar = (req, res) => {
   const { _id } = req.user;
-  User.findByIdAndUpdate(_id, { avatar: req.body.avatar })
-    .orFail()
-    .then(() => res.status(200).send(req.body))
+  User.findByIdAndUpdate(
+    _id,
+    { avatar: req.body.avatar },
+    { runValidators: true }
+  )
+    .then((user) => res.status(200).send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         res.status(400).send({ Error: err.message });

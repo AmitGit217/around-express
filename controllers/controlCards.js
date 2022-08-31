@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 /* eslint-disable object-curly-newline */
 const Card = require('../models/cardModel');
 
@@ -33,4 +34,16 @@ const deleteCardById = (req, res) => {
     });
 };
 
-module.exports = { getCards, postCard, deleteCardById };
+const likeCard = (req, res) => {
+  const cardId = req.params._id;
+  const userId = req.user._id;
+  Card.findByIdAndUpdate(
+    cardId,
+    { $addToSet: { likes: userId } },
+    { new: true }
+  )
+    .then((card) => res.status(200).send(card))
+    .catch((err) => res.send(err));
+};
+
+module.exports = { getCards, postCard, deleteCardById, likeCard };
