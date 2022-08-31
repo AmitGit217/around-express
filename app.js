@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use((req, res, next) => {
   req.user = {
-    _id: '630e34659a04b14bfa6236b2', // paste the _id of the test user created in the previous step
+    _id: '630e34659a04b14bfa6236b2',
   };
   next();
 });
