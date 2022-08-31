@@ -10,7 +10,13 @@ const postCard = (req, res) => {
   const { name, link, likes, createdAt } = req.body;
   Card.create({ name, link, owner: req.user._id, likes, createdAt })
     .then((card) => res.send(card))
-    .catch((err) => res.send(err));
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        res.status(400).send({ Error: err.message });
+      } else {
+        res.status(500).send({ Error: err.message });
+      }
+    });
 };
 
 const deleteCardById = (req, res) => {
@@ -18,7 +24,13 @@ const deleteCardById = (req, res) => {
   Card.findByIdAndRemove(_id)
     .orFail()
     .then((card) => res.send(card))
-    .catch((err) => res.status(err.statusCode).send({ Error: err.message }));
+    .catch((err) => {
+      if (err.name === 'DocumentNotFoundError') {
+        res.status(404).send({ Error: err.message });
+      } else {
+        res.status(500).send({ Error: err.message });
+      }
+    });
 };
 
 module.exports = { getCards, postCard, deleteCardById };

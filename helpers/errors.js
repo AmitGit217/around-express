@@ -1,2 +1,6 @@
-const notFound = { message: 'Requested resource not found' };
-module.exports = notFound;
+function sendErrorMessage(error){
+  switch(error.name){
+    case:
+  }
+
+}
