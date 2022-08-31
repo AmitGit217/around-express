@@ -8,8 +8,7 @@ const getCards = (req, res) =>
     .catch((err) => res.status(500).send(err));
 
 const postCard = (req, res) => {
-  const { name, link, likes, createdAt } = req.body;
-  Card.create({ name, link, owner: req.user._id, likes, createdAt })
+  Card.create({ ...req.body, owner: req.user._id })
     .then((card) => res.send(card))
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -46,4 +45,12 @@ const likeCard = (req, res) => {
     .catch((err) => res.send(err));
 };
 
-module.exports = { getCards, postCard, deleteCardById, likeCard };
+const disLikeCard = (req, res) => {
+  const cardId = req.params._id;
+  const userId = req.user._id;
+  Card.findByIdAndUpdate(cardId, { $pull: { likes: userId } }, { new: true })
+    .then((card) => res.status(200).send(card))
+    .catch((err) => res.send(err));
+};
+
+module.exports = { getCards, postCard, deleteCardById, likeCard, disLikeCard };
