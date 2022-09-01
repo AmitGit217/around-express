@@ -1,6 +1,3 @@
-/* eslint-disable no-useless-escape */
-/* eslint-disable operator-linebreak */
-/* eslint-disable object-curly-newline */
 const mongoose = require('mongoose');
 
 const validUrl =

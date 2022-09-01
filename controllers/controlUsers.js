@@ -1,4 +1,3 @@
-/* eslint-disable comma-dangle */
 const User = require('../models/userModel');
 const {
   NOT_FOUND,
@@ -20,9 +19,17 @@ const getUserById = (req, res) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        res.status(NOT_FOUND).send({ Error: err.message });
+        res
+          .status(NOT_FOUND)
+          .send({ Error: 'Card with this ID has not been found' });
+      } else if (err.name === 'CastError') {
+        res
+          .status(INVALID_DATA)
+          .send({ Error: 'Your input is not a valid data' });
       } else {
-        res.status(DEFAULT_ERROR).send({ Error: err.message });
+        res
+          .status(DEFAULT_ERROR)
+          .send({ Error: 'Something went wrong with the server' });
       }
     });
 };
@@ -44,15 +51,25 @@ const updateUser = (req, res) => {
   User.findByIdAndUpdate(
     _id,
     { name: req.body.name, about: req.body.about },
-    { runValidators: true }
+    { runValidators: true, new: true }
   )
     .orFail()
-    .then(() => res.send(req.body))
+    .then((user) => res.send(user))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.name === 'DocumentNotFoundError') {
+        res
+          .status(NOT_FOUND)
+          .send({ Error: 'Card with this ID has not been found' });
+      } else if (err.name === 'CastError') {
+        res
+          .status(INVALID_DATA)
+          .send({ Error: 'Your input is not a valid data' });
+      } else if (err.name === 'ValidationError') {
         res.status(INVALID_DATA).send({ Error: err.message });
       } else {
-        res.status(DEFAULT_ERROR).send({ Error: err.message });
+        res
+          .status(DEFAULT_ERROR)
+          .send({ Error: 'Something went wrong with the server' });
       }
     });
 };
@@ -62,14 +79,24 @@ const updateAvatar = (req, res) => {
   User.findByIdAndUpdate(
     _id,
     { avatar: req.body.avatar },
-    { runValidators: true }
+    { runValidators: true, new: true }
   )
     .then((user) => res.send(user))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.name === 'DocumentNotFoundError') {
+        res
+          .status(NOT_FOUND)
+          .send({ Error: 'Card with this ID has not been found' });
+      } else if (err.name === 'CastError') {
+        res
+          .status(INVALID_DATA)
+          .send({ Error: 'Your input is not a valid data' });
+      } else if (err.name === 'ValidationError') {
         res.status(INVALID_DATA).send({ Error: err.message });
       } else {
-        res.status(DEFAULT_ERROR).send({ Error: err.message });
+        res
+          .status(DEFAULT_ERROR)
+          .send({ Error: 'Something went wrong with the server' });
       }
     });
 };
