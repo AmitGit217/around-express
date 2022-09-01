@@ -2,6 +2,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const bodyParser = require('body-parser');
+const rateLimit = require('express-rate-limit');
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 const { PORT = 3000 } = process.env;
 const helmet = require('helmet');
@@ -23,6 +31,7 @@ app.use((req, res, next) => {
 });
 
 app.use(helmet());
+app.use(limiter);
 app.use(router);
 app.use('*', nonExistRoute);
 
