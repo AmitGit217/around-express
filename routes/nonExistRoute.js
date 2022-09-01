@@ -1,7 +1,7 @@
-const router = require('express').Router();
+const { NOT_FOUND } = require('../lib/consts');
 
-router.get('*', (req, res) => {
-  res.status(404).send({ message: 'Requested resource not found' });
-});
+const norExistRoute = (req, res) => {
+  res.status(NOT_FOUND).send({ message: 'Requested resource not found' });
+};
 
-module.exports = router;
+module.exports = norExistRoute;
