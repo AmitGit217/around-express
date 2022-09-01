@@ -38,6 +38,7 @@
 - Regex for validation.
 - Routes, helpers and controllers separation.
 - Asynchronous programming using promises.
+- Limiter library to avoid DoS attack
 
 ## Running the Project
 
