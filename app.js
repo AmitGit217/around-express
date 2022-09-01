@@ -6,7 +6,8 @@ const bodyParser = require('body-parser');
 const { PORT = 3000 } = process.env;
 const helmet = require('helmet');
 
-mongoose.connect('mongodb://localhost:27017/aroundb');
+const { MONGO_DB } = require('./lib/consts');
+mongoose.connect(MONGO_DB);
 
 const usersRoute = require('./routes/usersRoute');
 const cardsRoute = require('./routes/cardsRoute');

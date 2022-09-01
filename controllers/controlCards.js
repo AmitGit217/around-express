@@ -4,6 +4,9 @@ const {
   INVALID_DATA,
   DEFAULT_ERROR,
   CREATE,
+  CARD_NOT_FOUND_MESSAGE,
+  INVALID_DATA_MESSAGE,
+  DEFAULT_ERROR_MESSAGE,
 } = require('../lib/consts');
 
 const getCards = (req, res) =>
@@ -18,7 +21,7 @@ const postCard = (req, res) => {
       if (err.name === 'ValidationError') {
         res.status(INVALID_DATA).send({ Error: err.message });
       } else {
-        res.status(DEFAULT_ERROR).send({ Error: err.message });
+        res.status(DEFAULT_ERROR).send({ Error: DEFAULT_ERROR_MESSAGE });
       }
     });
 };
@@ -30,11 +33,11 @@ const deleteCardById = (req, res) => {
     .then((card) => res.send(card))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        res.status(NOT_FOUND).send({ Error: err.message });
+        res.status(NOT_FOUND).send({ Error: CARD_NOT_FOUND_MESSAGE });
       } else if (err.name === 'CastError') {
-        res.status(INVALID_DATA).send({ Error: err.message });
+        res.status(INVALID_DATA).send({ Error: INVALID_DATA_MESSAGE });
       } else {
-        res.status(DEFAULT_ERROR).send({ Error: err.message });
+        res.status(DEFAULT_ERROR).send({ Error: DEFAULT_ERROR_MESSAGE });
       }
     });
 };
@@ -51,17 +54,11 @@ const likeCard = (req, res) => {
     .then((card) => res.status(200).send(card))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        res
-          .status(NOT_FOUND)
-          .send({ Error: 'Card with this ID has not been found' });
+        res.status(NOT_FOUND).send({ Error: CARD_NOT_FOUND_MESSAGE });
       } else if (err.name === 'CastError') {
-        res
-          .status(INVALID_DATA)
-          .send({ Error: 'Your input is not a valid data' });
+        res.status(INVALID_DATA).send({ Error: INVALID_DATA_MESSAGE });
       } else {
-        res
-          .status(DEFAULT_ERROR)
-          .send({ Error: 'Something went wrong with the server' });
+        res.status(DEFAULT_ERROR).send({ Error: DEFAULT_ERROR_MESSAGE });
       }
     });
 };
@@ -74,17 +71,11 @@ const disLikeCard = (req, res) => {
     .then((card) => res.send(card))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        res
-          .status(NOT_FOUND)
-          .send({ Error: 'Card with this ID has not been found' });
+        res.status(NOT_FOUND).send({ Error: CARD_NOT_FOUND_MESSAGE });
       } else if (err.name === 'CastError') {
-        res
-          .status(INVALID_DATA)
-          .send({ Error: 'Your input is not a valid data' });
+        res.status(INVALID_DATA).send({ Error: INVALID_DATA_MESSAGE });
       } else {
-        res
-          .status(DEFAULT_ERROR)
-          .send({ Error: 'Something went wrong with the server' });
+        res.status(DEFAULT_ERROR).send({ Error: DEFAULT_ERROR_MESSAGE });
       }
     });
 };

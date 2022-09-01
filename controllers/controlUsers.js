@@ -4,6 +4,9 @@ const {
   INVALID_DATA,
   DEFAULT_ERROR,
   CREATE,
+  USER_NOT_FOUND_MESSAGE,
+  INVALID_DATA_MESSAGE,
+  DEFAULT_ERROR_MESSAGE,
 } = require('../lib/consts');
 
 const getUsers = (req, res) => {
@@ -19,17 +22,11 @@ const getUserById = (req, res) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        res
-          .status(NOT_FOUND)
-          .send({ Error: 'Card with this ID has not been found' });
+        res.status(NOT_FOUND).send({ Error: USER_NOT_FOUND_MESSAGE });
       } else if (err.name === 'CastError') {
-        res
-          .status(INVALID_DATA)
-          .send({ Error: 'Your input is not a valid data' });
+        res.status(INVALID_DATA).send({ Error: INVALID_DATA_MESSAGE });
       } else {
-        res
-          .status(DEFAULT_ERROR)
-          .send({ Error: 'Something went wrong with the server' });
+        res.status(DEFAULT_ERROR).send({ Error: DEFAULT_ERROR_MESSAGE });
       }
     });
 };
@@ -41,7 +38,7 @@ const postUser = (req, res) => {
       if (err.name === 'ValidationError') {
         res.status(INVALID_DATA).send({ Error: err.message });
       } else {
-        res.status(DEFAULT_ERROR).send({ Error: err.message });
+        res.status(DEFAULT_ERROR).send({ Error: DEFAULT_ERROR_MESSAGE });
       }
     });
 };
@@ -57,19 +54,13 @@ const updateUser = (req, res) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        res
-          .status(NOT_FOUND)
-          .send({ Error: 'Card with this ID has not been found' });
+        res.status(NOT_FOUND).send({ Error: USER_NOT_FOUND_MESSAGE });
       } else if (err.name === 'CastError') {
-        res
-          .status(INVALID_DATA)
-          .send({ Error: 'Your input is not a valid data' });
+        res.status(INVALID_DATA).send({ Error: INVALID_DATA_MESSAGE });
       } else if (err.name === 'ValidationError') {
         res.status(INVALID_DATA).send({ Error: err.message });
       } else {
-        res
-          .status(DEFAULT_ERROR)
-          .send({ Error: 'Something went wrong with the server' });
+        res.status(DEFAULT_ERROR).send({ Error: DEFAULT_ERROR_MESSAGE });
       }
     });
 };
@@ -85,19 +76,13 @@ const updateAvatar = (req, res) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        res
-          .status(NOT_FOUND)
-          .send({ Error: 'Card with this ID has not been found' });
+        res.status(NOT_FOUND).send({ Error: USER_NOT_FOUND_MESSAGE });
       } else if (err.name === 'CastError') {
-        res
-          .status(INVALID_DATA)
-          .send({ Error: 'Your input is not a valid data' });
+        res.status(INVALID_DATA).send({ Error: INVALID_DATA_MESSAGE });
       } else if (err.name === 'ValidationError') {
         res.status(INVALID_DATA).send({ Error: err.message });
       } else {
-        res
-          .status(DEFAULT_ERROR)
-          .send({ Error: 'Something went wrong with the server' });
+        res.status(DEFAULT_ERROR).send({ Error: DEFAULT_ERROR_MESSAGE });
       }
     });
 };
