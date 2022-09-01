@@ -81,6 +81,7 @@ const updateAvatar = (req, res) => {
     { avatar: req.body.avatar },
     { runValidators: true, new: true }
   )
+    .orFail()
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
