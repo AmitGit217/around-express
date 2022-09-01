@@ -9,8 +9,7 @@ const helmet = require('helmet');
 const { MONGO_DB } = require('./lib/consts');
 mongoose.connect(MONGO_DB);
 
-const usersRoute = require('./routes/usersRoute');
-const cardsRoute = require('./routes/cardsRoute');
+const router = require('./routes/index');
 const nonExistRoute = require('./routes/nonExistRoute');
 
 const app = express();
@@ -24,8 +23,7 @@ app.use((req, res, next) => {
 });
 
 app.use(helmet());
-app.use('/', usersRoute);
-app.use('/', cardsRoute);
+app.use(router);
 app.use('*', nonExistRoute);
 
 app.listen(PORT);
