@@ -80,4 +80,10 @@ const disLikeCard = (req, res) => {
     });
 };
 
-module.exports = { getCards, postCard, deleteCardById, likeCard, disLikeCard };
+module.exports = {
+  getCards,
+  postCard,
+  deleteCardById,
+  likeCard,
+  disLikeCard,
+};

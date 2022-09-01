@@ -2,12 +2,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
 const limiter = require('./helpers/limit');
 
 const { PORT = 3000 } = process.env;
-const helmet = require('helmet');
 
 const { MONGO_DB } = require('./lib/consts');
+
 mongoose.connect(MONGO_DB);
 
 const router = require('./routes/index');
