@@ -3,6 +3,6 @@
   "rules": {
     "no-underscore-dangle": ["error", { "allow": ["_id"] }],
     "implicit-arrow-linebreak": "off",
-    "no-useless-escape": "off" //For out regex to not interfere with our program
+    "no-useless-escape": "off" //For our regex to not interfere with our program
   }
 }
